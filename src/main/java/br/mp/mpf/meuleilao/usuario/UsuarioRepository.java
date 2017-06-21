@@ -1,4 +1,4 @@
-package br.mp.mpf.meuleilao.cadastro;
+package br.mp.mpf.meuleilao.usuario;
 
 import java.util.List;
 
