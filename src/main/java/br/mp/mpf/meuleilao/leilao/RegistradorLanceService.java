@@ -17,9 +17,11 @@ public class RegistradorLanceService {
 	private LanceRepository repository;
 
 	@Transactional
-	public void fazLance(Usuario ofertante, BigDecimal valor, Leilao leilao) {
+	public Lance fazLance(Usuario ofertante, BigDecimal valor, Leilao leilao) {
 		Lance lance = new Lance(ofertante, valor, leilao);
 		repository.incluir(lance);
+
+		return lance;
 	}
 
 }

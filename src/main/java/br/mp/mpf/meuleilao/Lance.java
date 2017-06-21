@@ -13,13 +13,13 @@ public class Lance {
 
 	private Leilao leilao;
 
-	private Date hora;
+	private Date data;
 
 	public Lance(Usuario ofertante, BigDecimal valor, Leilao leilao) {
 		this.ofertante = ofertante;
 		this.valor = valor;
 		this.leilao = leilao;
-		this.hora = new Date();
+		this.data = new Date();
 	}
 
 	public Long getId() {
@@ -54,12 +54,12 @@ public class Lance {
 		this.leilao = leilao;
 	}
 
-	public Date getHora() {
-		return hora;
+	public Date getData() {
+		return data;
 	}
 
-	public void setHora(Date hora) {
-		this.hora = hora;
+	public void setData(Date hora) {
+		this.data = hora;
 	}
 
 	@Override
