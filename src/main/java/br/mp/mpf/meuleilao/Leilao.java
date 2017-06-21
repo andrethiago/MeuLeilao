@@ -1,4 +1,4 @@
-package br.mp.mpf.leilao;
+package br.mp.mpf.meuleilao;
 
 import java.util.Date;
 import java.util.Set;
