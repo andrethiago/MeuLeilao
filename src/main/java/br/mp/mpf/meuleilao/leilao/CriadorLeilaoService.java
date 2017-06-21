@@ -12,9 +12,10 @@ public class CriadorLeilaoService {
 
 	private LeilaoRepository repository;
 
-	public void criar(Item item) {
+	public void criar(Item item, Date dataInicio, Date dataFim) {
 		Leilao leilao = new Leilao();
-		leilao.setDataInicio(new Date());
+		leilao.setDataInicio(dataInicio);
+		leilao.setDataFim(dataFim);;
 		leilao.setItem(item);
 		leilao.setNome(item.getNome());
 
