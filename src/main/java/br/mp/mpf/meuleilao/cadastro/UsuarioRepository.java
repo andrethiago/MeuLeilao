@@ -5,17 +5,14 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import br.mp.mpf.meuleilao.Usuario;
+import br.mp.mpf.meuleilao.infra.BaseRepository;
 
 @Repository
-class UsuarioRepository {
+class UsuarioRepository extends BaseRepository<Usuario> {
 
-	public void incluir(Usuario usuario) {
-
-	}
-
+	@SuppressWarnings("unchecked")
 	public List<Usuario> consultarTodos() {
-		// TODO Auto-generated method stub
-		return null;
+		return getSession().createQuery("from Usuario").list();
 	}
 
 }
