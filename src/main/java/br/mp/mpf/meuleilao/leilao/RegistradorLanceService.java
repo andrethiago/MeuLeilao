@@ -2,7 +2,6 @@ package br.mp.mpf.meuleilao.leilao;
 
 import java.math.BigDecimal;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,8 +12,11 @@ import br.mp.mpf.meuleilao.Usuario;
 @Service
 public class RegistradorLanceService {
 
-	@Autowired
 	private LanceRepository repository;
+
+	protected RegistradorLanceService(LanceRepository repository) {
+		this.repository = repository;
+	}
 
 	@Transactional
 	public Lance fazLance(Usuario ofertante, BigDecimal valor, Leilao leilao) {
