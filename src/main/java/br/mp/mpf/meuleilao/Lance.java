@@ -1,6 +1,7 @@
 package br.mp.mpf.meuleilao;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 public class Lance {
 
@@ -11,6 +12,15 @@ public class Lance {
 	private BigDecimal valor;
 
 	private Leilao leilao;
+
+	private Date hora;
+
+	public Lance(Usuario ofertante, BigDecimal valor, Leilao leilao) {
+		this.ofertante = ofertante;
+		this.valor = valor;
+		this.leilao = leilao;
+		this.hora = new Date();
+	}
 
 	public Long getId() {
 		return id;
@@ -42,6 +52,14 @@ public class Lance {
 
 	public void setLeilao(Leilao leilao) {
 		this.leilao = leilao;
+	}
+
+	public Date getHora() {
+		return hora;
+	}
+
+	public void setHora(Date hora) {
+		this.hora = hora;
 	}
 
 	@Override
