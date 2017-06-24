@@ -29,11 +29,7 @@ public class RegistradorLanceServiceTest {
 
 	@Test
 	public void lanceDevePossuirData() {
-		//RegistradorLanceService registradorLanceService = new RegistradorLanceService(repository);
-		//Leilao leilao = new Leilao();
 		Date daqui2Semanas = LocalDate.now().plusWeeks(2).toDate();
-		//leilao.setDataFim(daqui2Semanas);
-
 		Leilao leilao = LeilaoTestDataBuider.umLeilao().comDataFim(daqui2Semanas).build();
 
 		Lance lance = registradorLanceService.fazLance(new Usuario("nome", "email@email.com", "123456"), BigDecimal.valueOf(50.0), leilao);
@@ -41,7 +37,6 @@ public class RegistradorLanceServiceTest {
 		assertNotNull(lance.getData());
 
 		verify(repository, times(1)).incluir(lance);
-		//Mockito.verify(repository).incluir(lance);
 	}
 
 }

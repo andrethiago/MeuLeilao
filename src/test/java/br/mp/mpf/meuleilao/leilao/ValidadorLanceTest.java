@@ -21,7 +21,6 @@ public class ValidadorLanceTest {
 	public ExpectedException excecaoEsperada = ExpectedException.none(); // por padrão não são lançadas exceções
 
 	private ValidadorLance validador;
-	//private Leilao leilao;
 	private LeilaoTestDataBuider leilaoBuilder;
 
 	@Before
@@ -31,9 +30,6 @@ public class ValidadorLanceTest {
 
 	@Before
 	public void criaLeilaoAberto() {
-		//Date daqui2Semanas = LocalDate.now().plusWeeks(2).toDate();
-		//leilao = new Leilao();
-		//leilao.setDataFim(daqui2Semanas);
 		leilaoBuilder = LeilaoTestDataBuider.umLeilao();
 	}
 
@@ -53,7 +49,6 @@ public class ValidadorLanceTest {
 	@Test(expected = LanceInvalidoException.class)
 	public void naoEPossivelFazerLanceEmLeiloesFechados() {
 		Date ontem = LocalDate.now().minusDays(1).toDate();
-		//leilao.setDataFim(ontem);
 
 		validador.validar(LanceTestDataBuilder.umLance().build(), leilaoBuilder.comDataFim(ontem).build());
 	}
@@ -61,7 +56,6 @@ public class ValidadorLanceTest {
 	@Test
 	public void lanceEmUmLeilaoFechadoDeveTerMensagemExplicativaDoMotivoDeFalha() {
 		Date ontem = LocalDate.now().minusDays(1).toDate();
-		//leilao.setDataFim(ontem);
 
 		try {
 			validador.validar(LanceTestDataBuilder.umLance().build(), leilaoBuilder.comDataFim(ontem).build());
@@ -74,7 +68,6 @@ public class ValidadorLanceTest {
 	@Test
 	public void lanceEmUmLeilaoFechadoDeveTerMensagemExplicativaDoMotivoDeFalhaVersaoElegante() {
 		Date ontem = LocalDate.now().minusDays(1).toDate();
-		//leilao.setDataFim(ontem);
 
 		excecaoEsperada.expect(LanceInvalidoException.class);
 		excecaoEsperada.expectMessage("Não é possível fazer lances em um leilão fechado.");
@@ -93,25 +86,5 @@ public class ValidadorLanceTest {
 
 		validador.validar(LanceTestDataBuilder.umLance().comData(dataLance).build(), leilaoAcabaHoje);
 	}
-
-	/*@BeforeClass
-	public static void setupGlobal() {
-		System.out.println("@BeforeClass antes de todos os testes.");
-	}
-	
-	@AfterClass
-	public static void cleanUpGlobal() {
-		System.out.println("@AfterClass depois de todos os testes.");
-	}
-	
-	@Before
-	public void setup() {
-		System.out.println("@Before antes de cada teste.");
-	}
-	
-	@After
-	public void cleanUp() {
-		System.out.println("@After depois de cada teste.");
-	}*/
 
 }
