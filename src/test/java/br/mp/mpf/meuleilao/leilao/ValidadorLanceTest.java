@@ -4,10 +4,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -40,13 +40,13 @@ public class ValidadorLanceTest {
 	@Test
 	public void deveSerPossivelFazerLanceEmUmLeilaoAberto() {
 		Date daqui2Semanas = LocalDate.now().plusWeeks(2).toDate();
-		validador.validar(null, BigDecimal.valueOf(10.0), leilaoBuilder.comDataFim(daqui2Semanas).build());
+		validador.validar(LanceTestDataBuilder.umLance().build(), leilaoBuilder.comDataFim(daqui2Semanas).build());
 		assertTrue("Deve ser possível fazer lances em um leilão aberto.", true);
 	}
 
 	@Test
 	public void deveSerPossivelFazerLanceEmUmLeilaoAbertoSemDataFim() {
-		validador.validar(null, BigDecimal.valueOf(10.0), leilaoBuilder.comDataFim(null).build());
+		validador.validar(LanceTestDataBuilder.umLance().build(), leilaoBuilder.comDataFim(null).build());
 		assertTrue("Deve ser possível fazer lances em um leilão aberto sem data fim.", true);
 	}
 
@@ -55,7 +55,7 @@ public class ValidadorLanceTest {
 		Date ontem = LocalDate.now().minusDays(1).toDate();
 		//leilao.setDataFim(ontem);
 
-		validador.validar(null, BigDecimal.valueOf(10.0), leilaoBuilder.comDataFim(ontem).build());
+		validador.validar(LanceTestDataBuilder.umLance().build(), leilaoBuilder.comDataFim(ontem).build());
 	}
 
 	@Test
@@ -64,7 +64,7 @@ public class ValidadorLanceTest {
 		//leilao.setDataFim(ontem);
 
 		try {
-			validador.validar(null, BigDecimal.valueOf(10.0), leilaoBuilder.comDataFim(ontem).build());
+			validador.validar(LanceTestDataBuilder.umLance().build(), leilaoBuilder.comDataFim(ontem).build());
 			fail("Lance em leilão fechado deve lançar uma exceção.");
 		} catch (LanceInvalidoException e) {
 			assertEquals("Não é possível fazer lances em um leilão fechado.", e.getMessage());
@@ -79,15 +79,19 @@ public class ValidadorLanceTest {
 		excecaoEsperada.expect(LanceInvalidoException.class);
 		excecaoEsperada.expectMessage("Não é possível fazer lances em um leilão fechado.");
 
-		validador.validar(null, BigDecimal.valueOf(10.0), leilaoBuilder.comDataFim(ontem).build());
+		validador.validar(LanceTestDataBuilder.umLance().build(), leilaoBuilder.comDataFim(ontem).build());
 	}
 
 	@Test
-	public void deveSerPossivelFazerLanceNoUltimoSegundoDoLeilao() {
-		Date hoje = new Date();
-		Leilao leilaoAcabaHoje = leilaoBuilder.comDataFim(hoje).build();
+	public void deveSerPossivelFazerLanceNoUltimoMomentoDoLeilao() throws InterruptedException {
+		Date dataLance = new LocalDateTime(2017, 7, 3, 23, 59, 59).toDate();
+		Date dataFimLeilao = new LocalDateTime(2017, 7, 3, 23, 59, 59).toDate();
 
-		validador.validar(null, BigDecimal.valueOf(10.0), leilaoAcabaHoje);
+		Leilao leilaoAcabaHoje = leilaoBuilder.comDataFim(dataFimLeilao).build();
+
+		Thread.sleep(1000L);
+
+		validador.validar(LanceTestDataBuilder.umLance().comData(dataLance).build(), leilaoAcabaHoje);
 	}
 
 	/*@BeforeClass
