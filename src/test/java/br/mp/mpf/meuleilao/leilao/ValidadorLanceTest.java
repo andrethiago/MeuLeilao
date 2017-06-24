@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 import org.joda.time.LocalDate;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -19,23 +20,30 @@ public class ValidadorLanceTest {
 	@Rule
 	public ExpectedException excecaoEsperada = ExpectedException.none(); // por padrão não são lançadas exceções
 
+	private ValidadorLance validador;
+	private Leilao leilao;
+
+	@Before
+	public void preparaValidador() {
+		validador = new ValidadorLance();
+	}
+
+	@Before
+	public void criaLeilaoAberto() {
+		Date daqui2Semanas = LocalDate.now().plusWeeks(2).toDate();
+		leilao = new Leilao();
+		leilao.setDataFim(daqui2Semanas);
+	}
+
 	@Test
 	public void deveSerPossivelFazerLanceEmUmLeilaoAberto() {
-		ValidadorLance validador = new ValidadorLance();
-
-		Date daqui2Semanas = LocalDate.now().plusWeeks(2).toDate();
-		Leilao leilao = new Leilao();
-		leilao.setDataFim(daqui2Semanas);
-
 		validador.validar(null, BigDecimal.valueOf(10.0), leilao);
 		assertTrue("Deve ser possível fazer lances em um leilão aberto.", true);
 	}
 
 	@Test(expected = LanceInvalidoException.class)
 	public void naoEPossivelFazerLanceEmLeiloesFechados() {
-		ValidadorLance validador = new ValidadorLance();
 		Date ontem = LocalDate.now().minusDays(1).toDate();
-		Leilao leilao = new Leilao();
 		leilao.setDataFim(ontem);
 
 		validador.validar(null, BigDecimal.valueOf(10.0), leilao);
@@ -43,9 +51,7 @@ public class ValidadorLanceTest {
 
 	@Test
 	public void lanceEmUmLeilaoFechadoDeveTerMensagemExplicativaDoMotivoDeFalha() {
-		ValidadorLance validador = new ValidadorLance();
 		Date ontem = LocalDate.now().minusDays(1).toDate();
-		Leilao leilao = new Leilao();
 		leilao.setDataFim(ontem);
 
 		try {
@@ -58,9 +64,7 @@ public class ValidadorLanceTest {
 
 	@Test
 	public void lanceEmUmLeilaoFechadoDeveTerMensagemExplicativaDoMotivoDeFalhaVersaoElegante() {
-		ValidadorLance validador = new ValidadorLance();
 		Date ontem = LocalDate.now().minusDays(1).toDate();
-		Leilao leilao = new Leilao();
 		leilao.setDataFim(ontem);
 
 		excecaoEsperada.expect(LanceInvalidoException.class);
@@ -68,5 +72,25 @@ public class ValidadorLanceTest {
 
 		validador.validar(null, BigDecimal.valueOf(10.0), leilao);
 	}
+
+	/*@BeforeClass
+	public static void setupGlobal() {
+		System.out.println("@BeforeClass antes de todos os testes.");
+	}
+	
+	@AfterClass
+	public static void cleanUpGlobal() {
+		System.out.println("@AfterClass depois de todos os testes.");
+	}
+	
+	@Before
+	public void setup() {
+		System.out.println("@Before antes de cada teste.");
+	}
+	
+	@After
+	public void cleanUp() {
+		System.out.println("@After depois de cada teste.");
+	}*/
 
 }
