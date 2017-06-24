@@ -9,10 +9,12 @@ import br.mp.mpf.meuleilao.Usuario;
 public class ValidadorLance {
 
 	public void validar(Usuario ofertante, BigDecimal valor, Leilao leilao) {
-		Date agora = new Date();
+		if (leilao.getDataFim() != null) {
+			Date agora = new Date();
 
-		if (agora.after(leilao.getDataFim())) {
-			throw new LanceInvalidoException("Não é possível fazer lances em um leilão fechado.");
+			if (agora.after(leilao.getDataFim())) {
+				throw new LanceInvalidoException("Não é possível fazer lances em um leilão fechado.");
+			}
 		}
 
 	}
