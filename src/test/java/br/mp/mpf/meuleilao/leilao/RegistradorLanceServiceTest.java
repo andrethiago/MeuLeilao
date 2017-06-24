@@ -5,7 +5,9 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
+import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -28,7 +30,13 @@ public class RegistradorLanceServiceTest {
 	@Test
 	public void lanceDevePossuirData() {
 		//RegistradorLanceService registradorLanceService = new RegistradorLanceService(repository);
-		Lance lance = registradorLanceService.fazLance(new Usuario("nome", "email@email.com", "123456"), BigDecimal.valueOf(50.0), new Leilao());
+		//Leilao leilao = new Leilao();
+		Date daqui2Semanas = LocalDate.now().plusWeeks(2).toDate();
+		//leilao.setDataFim(daqui2Semanas);
+
+		Leilao leilao = LeilaoTestDataBuider.umLeilao().comDataFim(daqui2Semanas).build();
+
+		Lance lance = registradorLanceService.fazLance(new Usuario("nome", "email@email.com", "123456"), BigDecimal.valueOf(50.0), leilao);
 
 		assertNotNull(lance.getData());
 

@@ -20,6 +20,7 @@ public class RegistradorLanceService {
 
 	@Transactional
 	public Lance fazLance(Usuario ofertante, BigDecimal valor, Leilao leilao) {
+		new ValidadorLance().validar(ofertante, valor, leilao);
 		Lance lance = new Lance(ofertante, valor, leilao);
 		repository.incluir(lance);
 

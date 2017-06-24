@@ -17,6 +17,16 @@ public class Leilao {
 
 	private Date dataFim;
 
+	public Leilao() {
+		// contrutor padrão para não precisar mexer em quem já usa
+	}
+
+	public Leilao(Item item, Date dataInicio, Date dataFim) {
+		this.item = item;
+		this.dataInicio = dataInicio;
+		this.dataFim = dataFim;
+	}
+
 	public Long getId() {
 		return id;
 	}
