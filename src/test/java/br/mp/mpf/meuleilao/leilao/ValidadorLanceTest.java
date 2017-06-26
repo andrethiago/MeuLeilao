@@ -1,10 +1,12 @@
 package br.mp.mpf.meuleilao.leilao;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
+import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
@@ -13,7 +15,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import br.mp.mpf.meuleilao.Lance;
 import br.mp.mpf.meuleilao.Leilao;
+import br.mp.mpf.meuleilao.Usuario;
 
 public class ValidadorLanceTest {
 
@@ -25,7 +29,12 @@ public class ValidadorLanceTest {
 
 	@Before
 	public void preparaValidador() {
-		validador = new ValidadorLance();
+		//validador = new ValidadorLance();
+		Set<ValidaLance> validadores = new HashSet<>();
+		validadores.add(new ValidadorLanceLeilaoFechado());
+		validadores.add(new ValidadorLanceMaiorDeTodos());
+		validadores.add(new ValidadorLanceSeguidoMesmoUsuario());
+		validador = new ValidadorLance(validadores);
 	}
 
 	@Before
@@ -46,17 +55,17 @@ public class ValidadorLanceTest {
 		assertTrue("Deve ser possível fazer lances em um leilão aberto sem data fim.", true);
 	}
 
-	@Test(expected = LanceInvalidoException.class)
+	/*@Test(expected = LanceInvalidoException.class)
 	public void naoEPossivelFazerLanceEmLeiloesFechados() {
 		Date ontem = LocalDate.now().minusDays(1).toDate();
-
+	
 		validador.validar(LanceTestDataBuilder.umLance().build(), leilaoBuilder.comDataFim(ontem).build());
 	}
-
+	
 	@Test
 	public void lanceEmUmLeilaoFechadoDeveTerMensagemExplicativaDoMotivoDeFalha() {
 		Date ontem = LocalDate.now().minusDays(1).toDate();
-
+	
 		try {
 			validador.validar(LanceTestDataBuilder.umLance().build(), leilaoBuilder.comDataFim(ontem).build());
 			fail("Lance em leilão fechado deve lançar uma exceção.");
@@ -64,6 +73,7 @@ public class ValidadorLanceTest {
 			assertEquals("Não é possível fazer lances em um leilão fechado.", e.getMessage());
 		}
 	}
+	*/
 
 	@Test
 	public void lanceEmUmLeilaoFechadoDeveTerMensagemExplicativaDoMotivoDeFalhaVersaoElegante() {
@@ -85,6 +95,82 @@ public class ValidadorLanceTest {
 		Thread.sleep(1000L);
 
 		validador.validar(LanceTestDataBuilder.umLance().comData(dataLance).build(), leilaoAcabaHoje);
+	}
+
+	@Test
+	public void deveSerPossivelFazerUmLanceMaiorDoQueOMaiorExistente() {
+		Set<Lance> lancesDoLeilao = new HashSet<>(Arrays.asList(
+			new Lance[] {
+				LanceTestDataBuilder.umLance()
+					.comOfertante(new Usuario(null, "usuario1@email", null))
+					.comValor(BigDecimal.valueOf(90.0))
+					.build(),
+				LanceTestDataBuilder.umLance()
+					.comOfertante(new Usuario(null, "usuario2@email", null))
+					.comValor(BigDecimal.valueOf(95.0))
+					.build(),
+				LanceTestDataBuilder.umLance()
+					.comOfertante(new Usuario(null, "usuario3@email", null))
+					.comValor(BigDecimal.valueOf(100.0))
+					.build()}));
+		Lance novoLance = LanceTestDataBuilder.umLance().comValor(BigDecimal.valueOf(110.0)).build();
+		Leilao leilao = leilaoBuilder.comDataFim(null).comLances(lancesDoLeilao).build();
+
+		validador.validar(novoLance, leilao);
+	}
+
+	@Test
+	public void naoDeveSerPossivelFazerUmLanceMenorDoQueOMaiorExistente() {
+		Set<Lance> lancesDoLeilao = new HashSet<>(Arrays.asList(
+			new Lance[] {
+				LanceTestDataBuilder.umLance()
+					.comOfertante(new Usuario(null, "usuario1@email", null))
+					.comValor(BigDecimal.valueOf(90.0))
+					.build(),
+				LanceTestDataBuilder.umLance()
+					.comOfertante(new Usuario(null, "usuario2@email", null))
+					.comValor(BigDecimal.valueOf(95.0))
+					.build(),
+				LanceTestDataBuilder.umLance()
+					.comOfertante(new Usuario(null, "usuario3@email", null))
+					.comValor(BigDecimal.valueOf(100.0))
+					.build()}));
+		Lance novoLance = LanceTestDataBuilder.umLance().comValor(BigDecimal.valueOf(99.0)).build();
+		Leilao leilao = leilaoBuilder.comDataFim(null).comLances(lancesDoLeilao).build();
+
+		excecaoEsperada.expect(LanceInvalidoException.class);
+		excecaoEsperada.expectMessage("Não é possível dar um lance menor do que o maior já existente.");
+
+		validador.validar(novoLance, leilao);
+	}
+
+	@Test
+	public void naoDeveSerPossivelOMesmoUsuarioFazerDoisLancesSeguidosEmUmLeilao() {
+		Lance primeiroLance = LanceTestDataBuilder.umLance()
+			.comData(LocalDate.now().minusDays(2).toDate())
+			.comOfertante(new Usuario(null, "usuario1@email", null))
+			.comValor(BigDecimal.valueOf(90.0))
+			.build();
+
+		Lance segundoLance = LanceTestDataBuilder.umLance()
+			.comData(LocalDate.now().minusDays(1).toDate())
+			.comOfertante(new Usuario(null, "usuario2@email", null))
+			.comValor(BigDecimal.valueOf(100.0))
+			.build();
+
+		Lance novoLance = LanceTestDataBuilder.umLance()
+			.comData(LocalDate.now().minusDays(1).toDate())
+			.comOfertante(new Usuario(null, "usuario2@email", null))
+			.comValor(BigDecimal.valueOf(105.0))
+			.build();
+
+		Set<Lance> lancesDoLeilao = new HashSet<>(Arrays.asList(new Lance[] {primeiroLance, segundoLance}));
+		Leilao leilao = leilaoBuilder.comDataFim(null).comLances(lancesDoLeilao).build();
+
+		excecaoEsperada.expect(LanceInvalidoException.class);
+		excecaoEsperada.expectMessage("Não é possível o mesmo usuário dar dois lances seguidos no leilão.");
+
+		validador.validar(novoLance, leilao);
 	}
 
 }
