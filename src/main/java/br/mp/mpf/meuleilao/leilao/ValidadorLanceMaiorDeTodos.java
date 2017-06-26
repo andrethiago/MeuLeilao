@@ -12,7 +12,7 @@ public class ValidadorLanceMaiorDeTodos implements ValidaLance {
 		Set<Lance> lancesDoLeilao = leilao.getLances();
 		for (Lance lance : lancesDoLeilao) {
 			if (lance.getValor().compareTo(novoLance.getValor()) == 1) {
-				throw new LanceInvalidoException("Não é possível dar um lance menor do que o maior já existente.");
+				throw new LanceInvalidoException(MensagemValidacao.NAO_DEVE_SER_POSSIVEL_DAR_LANCE_MENOR_QUE_MAIOR);
 			}
 		}
 	}

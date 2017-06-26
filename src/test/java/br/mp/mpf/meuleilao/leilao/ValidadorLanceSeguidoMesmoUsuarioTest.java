@@ -53,7 +53,7 @@ public class ValidadorLanceSeguidoMesmoUsuarioTest {
 		Leilao leilao = leilaoBuilder.comDataFim(null).comLances(lancesDoLeilao).build();
 
 		excecaoEsperada.expect(LanceInvalidoException.class);
-		excecaoEsperada.expectMessage("Não é possível o mesmo usuário dar dois lances seguidos no leilão.");
+		excecaoEsperada.expectMessage(MensagemValidacao.NAO_DEVE_SER_POSSIVEL_USUARIO_DAR_DOIS_LANCES_SEGUIDOS_LEILAO);
 
 		validador.validar(novoLance, leilao);
 	}

@@ -70,7 +70,7 @@ public class ValidadorLanceMaiorDeTodosTest {
 		Leilao leilao = leilaoBuilder.comDataFim(null).comLances(lancesDoLeilao).build();
 
 		excecaoEsperada.expect(LanceInvalidoException.class);
-		excecaoEsperada.expectMessage("Não é possível dar um lance menor do que o maior já existente.");
+		excecaoEsperada.expectMessage(MensagemValidacao.NAO_DEVE_SER_POSSIVEL_DAR_LANCE_MENOR_QUE_MAIOR);
 
 		validador.validar(novoLance, leilao);
 	}

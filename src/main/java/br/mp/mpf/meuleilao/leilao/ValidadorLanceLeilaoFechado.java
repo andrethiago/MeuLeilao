@@ -14,7 +14,7 @@ public class ValidadorLanceLeilaoFechado implements ValidaLance {
 			LocalDate dataLance = LocalDate.fromDateFields(novoLance.getData());
 
 			if (dataLance.isAfter(dataFim)) {
-				throw new LanceInvalidoException("Não é possível fazer lances em um leilão fechado.");
+				throw new LanceInvalidoException(MensagemValidacao.NAO_DEVE_SER_POSSIVEL_FAZER_LANCES_LEILAO_FECHADO);
 			}
 		}
 	}

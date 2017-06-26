@@ -45,7 +45,7 @@ public class ValidadorLanceLeilaoFechadoTest {
 		Date ontem = LocalDate.now().minusDays(1).toDate();
 
 		excecaoEsperada.expect(LanceInvalidoException.class);
-		excecaoEsperada.expectMessage("Não é possível fazer lances em um leilão fechado.");
+		excecaoEsperada.expectMessage(MensagemValidacao.NAO_DEVE_SER_POSSIVEL_FAZER_LANCES_LEILAO_FECHADO);
 
 		validador.validar(LanceTestDataBuilder.umLance().build(), leilaoBuilder.comDataFim(ontem).build());
 	}

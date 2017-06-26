@@ -22,7 +22,8 @@ public class ValidadorLanceSeguidoMesmoUsuario implements ValidaLance {
 				.get(0);
 
 			if (novoLance.getOfertante().equals(lanceMaisRecente.getOfertante())) {
-				throw new LanceInvalidoException("Não é possível o mesmo usuário dar dois lances seguidos no leilão.");
+				throw new LanceInvalidoException(
+					MensagemValidacao.NAO_DEVE_SER_POSSIVEL_USUARIO_DAR_DOIS_LANCES_SEGUIDOS_LEILAO);
 			}
 		}
 	}
