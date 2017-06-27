@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
+import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -43,7 +44,9 @@ public class VisualizadorResumoLeiloesServiceTest {
 		lancesGarmin = Arrays.asList(
 			new Lance[] {LanceTestDataBuilder.umLance().comId(1L).comValor(BigDecimal.valueOf(550.0)).build(),
 				LanceTestDataBuilder.umLance().comId(2L).comValor(BigDecimal.valueOf(450.0)).build(),
-				LanceTestDataBuilder.umLance().comId(3L).comValor(BigDecimal.valueOf(600.0)).build()});
+				LanceTestDataBuilder.umLance().comId(3L).comValor(BigDecimal.valueOf(600.0)).build(),
+				LanceTestDataBuilder.umLance().comId(8L).comValor(BigDecimal.valueOf(555.0)).build(),
+				LanceTestDataBuilder.umLance().comId(9L).comValor(BigDecimal.valueOf(400.0)).build()});
 
 		lancesIphone4 = Arrays.asList(
 			new Lance[] {LanceTestDataBuilder.umLance().comId(4L).comValor(BigDecimal.valueOf(1200.0)).build(),
@@ -55,19 +58,19 @@ public class VisualizadorResumoLeiloesServiceTest {
 			.asList(new Lance[] {LanceTestDataBuilder.umLance().comId(8L).comValor(BigDecimal.valueOf(750.0)).build()});
 
 		leilaoGarmin = LeilaoTestDataBuider.umLeilao()
-			.comDataFim(null)
+			.comDataFim(LocalDate.now().plusDays(5).toDate())
 			.comNome("Leilão GPS Garmin")
 			.comLances(new HashSet<>(lancesGarmin))
 			.build();
 
 		leilaoIphone = LeilaoTestDataBuider.umLeilao()
-			.comDataFim(null)
+			.comDataFim(LocalDate.now().plusDays(2).toDate())
 			.comNome("Leilão Iphone 4")
 			.comLances(new HashSet<>(lancesIphone4))
 			.build();
 
 		leilaoGeladeira = LeilaoTestDataBuider.umLeilao()
-			.comDataFim(null)
+			.comDataFim(LocalDate.now().plusDays(20).toDate())
 			.comNome("Leilão Geladeira")
 			.comLances(new HashSet<>(lancesGeladeira))
 			.build();
@@ -118,6 +121,21 @@ public class VisualizadorResumoLeiloesServiceTest {
 				assertEquals(BigDecimal.valueOf(750.0), to.getMaiorLance());
 			}
 		}
+	}
+
+	@Test
+	public void deveSerPossivelListarOsLeiloesAbertosOrdenadosPorDataFimMaisProxima() {
+		when(repository.consultarTodosLeiloesAbertos()).thenReturn(leiloes);
+
+		List<ResumoLeilaoTO> leiloesTO = service.visualizaTodosLeiloesAbertos();
+
+		ResumoLeilaoTO toIphone = leiloesTO.get(0);
+		ResumoLeilaoTO toGarmin = leiloesTO.get(1);
+		ResumoLeilaoTO toGeladeira = leiloesTO.get(2);
+		assertEquals(leilaoIphone.getNome(), toIphone.getNomeLeilao());
+		assertEquals(leilaoGarmin.getNome(), toGarmin.getNomeLeilao());
+		assertEquals(leilaoGeladeira.getNome(), toGeladeira.getNomeLeilao());
+
 	}
 
 }

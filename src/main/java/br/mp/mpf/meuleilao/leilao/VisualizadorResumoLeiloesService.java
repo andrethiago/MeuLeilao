@@ -2,7 +2,11 @@ package br.mp.mpf.meuleilao.leilao;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import org.apache.commons.collections.CollectionUtils;
 
 import br.mp.mpf.meuleilao.Lance;
 import br.mp.mpf.meuleilao.Leilao;
@@ -18,13 +22,15 @@ public class VisualizadorResumoLeiloesService {
 		for (Leilao leilao : leiloes) {
 			ResumoLeilaoTO to = new ResumoLeilaoTO();
 			to.setNomeLeilao(leilao.getNome());
-			to.setQuantidadeLances(leilao.getLances().size());
-			to.setMaiorLance(getMaiorLance(leilao));
-
+			if (CollectionUtils.isNotEmpty(leilao.getLances())) {
+				to.setQuantidadeLances(leilao.getLances().size());
+				to.setMaiorLance(getMaiorLance(leilao));
+			}
+			to.setDataFim(leilao.getDataFim());
 			tos.add(to);
 		}
 
-		return tos;
+		return ordenarPorDataFimMaisRecente(tos);
 	}
 
 	private BigDecimal getMaiorLance(Leilao leilao) {
@@ -39,6 +45,18 @@ public class VisualizadorResumoLeiloesService {
 		Lance maiorLance = leilao.getLances().stream().max((l1, l2) -> l1.getValor().compareTo(l2.getValor())).get();
 		return maiorLance.getValor();
 
+	}
+
+	private List<ResumoLeilaoTO> ordenarPorDataFimMaisRecente(List<ResumoLeilaoTO> tos) {
+		/*Collections.sort(tos, new Comparator<ResumoLeilaoTO>() {
+		
+			@Override
+			public int compare(ResumoLeilaoTO resumo1, ResumoLeilaoTO resumo2) {
+				return resumo1.getDataFim().compareTo(resumo2.getDataFim());
+			}
+		});*/
+
+		return tos.stream().sorted(Comparator.comparing(ResumoLeilaoTO::getDataFim)).collect(Collectors.toList());
 	}
 
 }
