@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<!-- 0. Fazendo nossa página ser "controlada" pelo AngularJS. -->
+<html ng-app="helloAngular">
+<head>
+<meta charset="UTF-8">
+<title>Olá, AngularJS!</title>
+<!-- 0.1 Importando Script do AngularJS -->
+<script src="../js/angular.js"></script>
+
+<script type="text/javascript">
+	// 1. Criamos o app helloAngular
+	var app = angular.module("helloAngular", []);
+	
+	// 2. Criamos um Controller
+	app.controller("HelloAngularController", function($scope) {
+		
+		// 3. Colocamos uma variável no $scope
+		$scope.mensagem = "Olá, AngularJS! Muito bom conhecer você!";
+	});
+
+</script>
+
+</head>
+<!-- 4. Dizemos que o body é controlado pelo Controller que acabamos de criar -->
+<body ng-controller="HelloAngularController">
+
+<!-- 5. Imprimimos a mensagem -->
+<h1>{{mensagem}}</h1>
+</body>
+</html>

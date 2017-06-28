@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html ng-app="GerenciaPalestras">
+<head>
+<meta charset="UTF-8">
+<title>Gerência de Palestras</title>
+
+
+<link rel="stylesheet" href="../css/bootstrap.css">
+<!-- Optional theme -->
+<link rel="stylesheet" href="../css/bootstrap-theme.css">
+
+<style type="text/css">
+
+	div.container {
+		margin-left: auto;
+		margin-right: auto;
+		width: 600px;
+	}
+
+	.form-control {
+		margin-bottom: 10px;
+	}
+
+</style>
+
+<script src="../js/jquery-2.1.4.js"></script>
+<script src="../js/bootstrap.js"></script>
+<script src="../js/angular.js"></script>
+
+<script type="text/javascript">
+	var app = angular.module("GerenciaPalestras", []);
+
+	app.controller("GerenciaPalestrasController", function($scope) {
+		$scope.titulo = "Gerenciamento de Palestras"
+
+		$scope.palestras = [ 
+		                     
+			{
+				"id" : 1,
+				"nome" : "Conhecendo Angular JS",
+				"autor" : "André Thiago"
+			}, 
+			{
+				"id" : 2,
+				"nome" : "Apresentando Spring MVC",
+				"autor" : "Roy Johnson"
+			}, 
+			{
+				"id" : 3,
+				"nome" : "Mapeamento ORM com Hibernate",
+				"autor" : "Gavin King"
+			}, 
+			{
+				"id" : 4,
+				"nome" : "Modelando com base em DDD",
+				"autor" : "Eric Evans"
+			}, 
+			{
+				"id" : 5,
+				"nome" : "Microservice Patterns",
+				"autor" : "Martin Fowler"
+			} 
+		];
+		
+		$scope.adicionarPalestra = function(palestra) {
+			//$scope.palestras.push({"nome": $scope.nome, "autor": $scope.autor}); <-- Evitar ler do $scope no controller: além de ficar menos claro, dificulta a elaboração de testes de unidade
+			//$scope.palestras.push({"nome": nome, "autor": autor});
+			palestra.id = $scope.palestras.length;
+			$scope.palestras.push(palestra);
+			delete $scope.palestra;
+		}
+		
+		$scope.temPalestraSelecionada = function(palestras) {
+			return $scope.palestras.some(function (palestra){
+				return palestra.selecionada;
+			});
+		}
+	});
+</script>
+
+
+</head>
+<body ng-controller="GerenciaPalestrasController">
+
+	<div class="container">
+
+		<!-- 	<h1 ng-bind="titulo"></h1> -->
+		<div class="jumbotron">
+			<h1>{{titulo}}</h1>
+		</div>
+
+
+		<table class="table table-hover">
+			<tr>
+				<th>#</th>
+				<th></th>
+				<th>Nome</th>
+				<th>Autor</th>
+			</tr>
+			<tr ng-class="{warning : palestra.selecionada}" ng-repeat="palestra in palestras">
+				<th>{{$index + 1}}</th>
+				<th><input type="checkbox" ng-model="palestra.selecionada" /></th>
+				<td>{{palestra.nome}}</td>
+				<td>{{palestra.autor}}</td>
+			</tr>
+		</table>
+		
+		<hr/>
+		
+		<input class="form-control" type="text" ng-model="palestra.nome" placeholder="Título da Palestra" />
+		<input class="form-control" type="text" ng-model="palestra.autor" placeholder="Autor da Palestra" />
+		
+		<button class="btn btn-primary btn-block" ng-click="adicionarPalestra(palestra)" ng-disabled="!palestra.nome || !palestra.autor">Adicionar Palestra</button>
+		<button class="btn btn-danger btn-block" ng-hide="!temPalestraSelecionada()" >Apagar Palestra</button>
+		
+	
+		<div ng-include="'rodape.html'"></div>
+	
+	</div>
+	
+
+
+
+</body>
+</html>
