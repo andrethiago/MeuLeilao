@@ -91,6 +91,7 @@ public class VisualizadorResumoLeiloesServiceTest {
 		assertEquals(leiloes.size(), leiloesTO.size());
 
 		for (ResumoLeilaoTO to : leiloesTO) {
+			// TODO posso usar aqui o hamcrest hasSize
 			if (to.getNomeLeilao().equals(leilaoGarmin.getNome())) {
 				assertEquals(leilaoGarmin.getLances().size(), to.getQuantidadeLances().intValue());
 			}
