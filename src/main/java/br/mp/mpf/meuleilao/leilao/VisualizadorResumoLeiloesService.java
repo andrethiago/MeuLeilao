@@ -38,6 +38,7 @@ public class VisualizadorResumoLeiloesService {
 			ResumoLeilaoTO to = new ResumoLeilaoTO();
 			to.setId(leilao.getId());
 			to.setNomeLeilao(leilao.getNome());
+			to.setLanceMinimo(leilao.getItem().getValorMinimo());
 			if (CollectionUtils.isNotEmpty(leilao.getLances())) {
 				to.setQuantidadeLances(leilao.getLances().size());
 				to.setMaiorLance(getMaiorLance(leilao));

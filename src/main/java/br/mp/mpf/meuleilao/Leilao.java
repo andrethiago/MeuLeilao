@@ -1,7 +1,6 @@
 package br.mp.mpf.meuleilao;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -38,7 +37,7 @@ public class Leilao {
 
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "leilao", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-	private Set<Lance> lances = new HashSet<>();
+	private Set<Lance> lances;
 
 	@Column(name = "DATA_INICIO", nullable = false)
 	private Date dataInicio;

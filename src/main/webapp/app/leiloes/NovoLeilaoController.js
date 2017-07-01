@@ -24,7 +24,7 @@ angular.module('leilao').controller('NovoLeilaoController', function ($scope, $l
 	$scope.salvar = function(leilao) {
 		LeiloesRestService.incluir(leilao).then(
 			function success(resposta) {
-				$location.path('/meusLeiloes/1');
+				$location.path('/todos');
 			},
 			function error(resposta) {}
 		);

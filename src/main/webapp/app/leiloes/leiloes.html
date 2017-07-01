@@ -24,8 +24,10 @@
 		<div class="bs-callout bs-callout-info" ng-repeat="leilao in leiloes">
 			<h4>{{leilao.nomeLeilao}}</h4>
 			<dl class="dl-horizontal">
-				<dt>Maior Lance</dt>
-				<dd>{{leilao.maiorLance}}</dd>
+				<dt ng-if="leilao.quantidadeLances == 0">Lance Mínimo</dt>
+				<dd ng-if="leilao.quantidadeLances == 0">{{leilao.lanceMinimo}}</dd>
+				<dt ng-if="leilao.quantidadeLances != 0">Maior Lance</dt>
+				<dd ng-if="leilao.quantidadeLances != 0">{{leilao.maiorLance}}</dd>
 				<dt>Quantidade de lances</dt>
 				<dd>{{leilao.quantidadeLances}}</dd>
 				<dt>Termina em</dt>

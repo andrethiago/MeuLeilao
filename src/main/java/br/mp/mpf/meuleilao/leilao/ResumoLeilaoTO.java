@@ -9,6 +9,7 @@ public class ResumoLeilaoTO {
 	private String nomeLeilao;
 	private Integer quantidadeLances = 0;
 	private BigDecimal maiorLance = BigDecimal.ZERO;
+	private BigDecimal lanceMinimo;
 	private Date dataFim;
 
 	public Long getId() {
@@ -49,6 +50,14 @@ public class ResumoLeilaoTO {
 
 	public void setDataFim(Date dataFim) {
 		this.dataFim = dataFim;
+	}
+
+	public BigDecimal getLanceMinimo() {
+		return lanceMinimo;
+	}
+
+	public void setLanceMinimo(BigDecimal lanceMinimo) {
+		this.lanceMinimo = lanceMinimo;
 	}
 
 	@Override

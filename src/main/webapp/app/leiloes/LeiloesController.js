@@ -25,7 +25,6 @@ angular.module('leilao').controller('LeiloesController', function ($scope, $rout
 		} else {
 			LeiloesRestService.getLeiloes().then(
 					function success(resposta) {
-						console.log(resposta.data)
 						$scope.leiloes = resposta.data.dados;
 					},
 					function error(erro) {

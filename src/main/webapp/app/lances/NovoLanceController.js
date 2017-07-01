@@ -1,4 +1,4 @@
-angular.module('leilao').controller('NovoLanceController', function ($scope, $routeParams, LeiloesRestService){
+angular.module('leilao').controller('NovoLanceController', function ($scope, $routeParams, $location, LeiloesRestService, LancesRestService){
 	
 	$scope.leilao =  {};
 	
@@ -7,14 +7,20 @@ angular.module('leilao').controller('NovoLanceController', function ($scope, $ro
 			$scope.leilao = resposta.data.dados;
 		},
 		function error(erro) {
-			console.log("Erro ao recuparar leilão para o lance.", erro);
+			console.log("Erro ao recuperar leilão para o lance.", erro);
 		}
 	);
 	
-	$scope.salvar = function(leilao) {
-		console.log('leilão', leilao);
-		LeiloesRestService.incluir(leilao).then(
-			function success(resposta) {},
+	$scope.enviar = function(valor) {
+		var lance = {
+			'leilao' : $scope.leilao.id,
+			'valor' : valor,
+			'usuario' : 1
+		};
+		LancesRestService.incluir(lance).then(
+			function success(resposta) {
+				$location.path('/todos');
+			},
 			function error(resposta) {}
 		);
 	}

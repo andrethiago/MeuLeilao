@@ -33,25 +33,9 @@
 		<div class="form-group">
 		  <div class="col-sm-offset-2 col-sm-10">
 		  
-		  	<div ng-messages="projetoForm.nome.$error" ng-show="projetoForm.nome.$invalid && projetoForm.nome.$dirty" class="alert alert-danger">
-				<div ng-message="required" >
-					Por favor preencha o nome!
-				</div>
-				
-				<div ng-message="minlength">
-					O tamanho mínimo do nome é 10 caracteres.
-				</div>
-		  	</div>
-		  	
-		  	<div ng-messages="projetoForm.descricao.$error" ng-show="projetoForm.descricao.$invalid && projetoForm.descricao.$dirty" class="alert alert-danger">
-				<div ng-message="required" >
-					Por favor preencha a descrição!
-				</div>
-				
-		  	</div>
 		  
 			
-		    <button type="button" class="btn btn-primary" ng-click="enviar()" >Enviar</button>
+		    <button type="button" class="btn btn-primary" ng-click="enviar(valor)" >Enviar</button>
 		    <a href="#/todos" class="btn btn-default">Cancelar</a>
 		  </div>
 		</div>

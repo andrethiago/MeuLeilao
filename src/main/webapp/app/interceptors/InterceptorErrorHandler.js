@@ -18,7 +18,6 @@ angular
                             return $q.reject(rejection);
                         },
                         'responseError': function (rejection){
-                        	console.log('interceptor error', rejection);
                             if (rejection.data) {
                                 txt = (rejection.data.message) ? rejection.data.message : rejection.statusText;
 
