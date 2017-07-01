@@ -43,7 +43,7 @@ public class PersistenceConfig {
 		Properties properties = new Properties();
 		properties.setProperty("hibernate.show_sql", "true");
 		properties.setProperty("hibernate.dialect", environment.getProperty("db.dialect"));
-		properties.setProperty("hibernate.hbm2ddl.auto", "update");
+		//properties.setProperty("hibernate.hbm2ddl.auto", "update");
 		//properties.setProperty("hibernate.hbm2ddl.auto", "validate");
 
 		sessionFactory.setHibernateProperties(properties);

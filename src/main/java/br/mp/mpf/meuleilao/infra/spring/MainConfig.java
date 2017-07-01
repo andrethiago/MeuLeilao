@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Import;
 
 @Configuration
 @ComponentScan(basePackages = "br.mp.mpf.meuleilao")
-@Import(value = {PersistenceConfig.class/*, SecurityConfig.class*/})
+@Import(value = {PersistenceConfig.class, SecurityConfig.class})
 public class MainConfig {
 
 }
