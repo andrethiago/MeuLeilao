@@ -48,3 +48,14 @@
 .bs-callout-info h4 {
   color: #1b809e;
 }
+
+.form-group.obrigatorio label:after {
+  font-size: 19px;
+  color: #F44336;
+  vertical-align: top;
+  content: '*';
+  margin-left: 2px; }
+
+.form-group.obrigatorio label.radio-inline:after {
+  content: '';
+  margin: 0; }

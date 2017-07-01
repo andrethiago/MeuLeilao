@@ -22,12 +22,15 @@ angular.module('leilao').controller('NovoLeilaoController', function ($scope, $l
 	}
 	
 	$scope.salvar = function(leilao) {
-		LeiloesRestService.incluir(leilao).then(
-			function success(resposta) {
-				$location.path('/todos');
-			},
-			function error(resposta) {}
-		);
+		$scope.leilaoForm.$setDirty();
+		if($scope.leilaoForm.$valid) {
+			LeiloesRestService.incluir(leilao).then(
+					function success(resposta) {
+						$location.path('/todos');
+					},
+					function error(resposta) {}
+			);
+		}
 	}
 	
 });

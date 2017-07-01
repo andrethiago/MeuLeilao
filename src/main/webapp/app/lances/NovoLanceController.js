@@ -12,17 +12,21 @@ angular.module('leilao').controller('NovoLanceController', function ($scope, $ro
 	);
 	
 	$scope.enviar = function(valor) {
-		var lance = {
-			'leilao' : $scope.leilao.id,
-			'valor' : valor,
-			'usuario' : 1
-		};
-		LancesRestService.incluir(lance).then(
-			function success(resposta) {
-				$location.path('/todos');
-			},
-			function error(resposta) {}
-		);
+		$scope.lanceForm.$setDirty();
+		if($scope.lanceForm.$valid) {
+			var lance = {
+					'leilao' : $scope.leilao.id,
+					'valor' : valor,
+					'usuario' : 1
+			};
+			LancesRestService.incluir(lance).then(
+					function success(resposta) {
+						$location.path('/todos');
+					},
+					function error(resposta) {}
+			);
+			
+		}
 	}
 	
 });
