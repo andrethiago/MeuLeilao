@@ -18,17 +18,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth.jdbcAuthentication().dataSource(dataSource).usersByUsernameQuery("select email,senha, ativo from usuario where email=?").authoritiesByUsernameQuery(
-			"select u.email, p.papel from usuario u, usuario_papel p where u.id_usuario = p.id_usuario and u.email=?");
+		auth.jdbcAuthentication()
+			.dataSource(dataSource)
+			.usersByUsernameQuery("select email,password, ativo from usuario where email=?")
+			.authoritiesByUsernameQuery(
+				"select u.email, p.papel from usuario u, usuario_papel p where u.id_usuario = p.id_usuario and u.email=?");
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable();
 		http.authorizeRequests().antMatchers("/resources/**").permitAll();
-		http.authorizeRequests().antMatchers("/**/usuarios**/**").hasRole("ADMIN");
 		http.authorizeRequests().anyRequest().authenticated();
-		http.formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/app/index.html");
+		http.formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/app/index.html", true);
 
 		http.logout().logoutSuccessUrl("/login");
 	}
