@@ -24,7 +24,7 @@ import com.fasterxml.jackson.datatype.hibernate4.Hibernate4Module;
 import com.fasterxml.jackson.datatype.hibernate4.Hibernate4Module.Feature;
 
 @Configuration
-@ComponentScan(basePackages = "br.mp.mpf.meuleilao")
+@ComponentScan(basePackages = "br.mp.mpf.meuleilao.web")
 @EnableWebMvc
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
 

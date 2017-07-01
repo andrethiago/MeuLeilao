@@ -1,6 +1,7 @@
 package br.mp.mpf.meuleilao;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -15,6 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "LEILAO")
@@ -33,8 +36,9 @@ public class Leilao {
 	@JoinColumn(name = "ID_ITEM", nullable = false)
 	private Item item;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "leilao")
-	private Set<Lance> lances;
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "leilao", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+	private Set<Lance> lances = new HashSet<>();
 
 	@Column(name = "DATA_INICIO", nullable = false)
 	private Date dataInicio;

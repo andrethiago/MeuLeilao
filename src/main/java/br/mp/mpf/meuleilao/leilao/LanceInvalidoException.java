@@ -1,6 +1,8 @@
 package br.mp.mpf.meuleilao.leilao;
 
-public class LanceInvalidoException extends RuntimeException {
+import br.mp.mpf.meuleilao.infra.BusinessException;
+
+public class LanceInvalidoException extends BusinessException {
 
 	private static final long serialVersionUID = 473176381172975423L;
 

@@ -1,0 +1,120 @@
+<div ng-controller="NovoLeilaoController">
+	<div class="alert alert-success alert-dismissible" role="alert" ng-if="mensagemSucesso">
+	  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	  <strong>Mensagem</strong> {{mensagemSucesso}}
+	</div>
+	
+	<div class="alert alert-warning alert-dismissible" role="alert" ng-if="mensagemAviso">
+	  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	  <strong>Atenção</strong> {{mensagemAviso}}
+	</div>
+	
+	<div class="alert alert-danger alert-dismissible" role="alert" ng-if="mensagemErro">
+	  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	  <strong>Erro</strong> {{mensagemErro}}
+	</div>
+	
+	
+	<h3>Novo Leilão</h3>
+	<hr/>
+	
+	<form name="leilaoForm" class="form-horizontal">
+		<div class="form-group">
+			<label for="nome" class="col-sm-2 control-label">Nome do Leilão</label>
+			<div class="col-sm-10">
+				<input autocomplete="off" type="text" class="form-control" name="nome" ng-model="leilao.item.nome" ng-required="true" ng-minlength="10" />
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="descricao" class="col-sm-2 control-label">Descrição</label>
+			<div class="col-sm-10">
+				<textarea type="text" class="form-control" name="descricao" ng-model="leilao.item.descricao">
+				</textarea>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">Valor mínimo</label>
+			<div class="col-sm-3">
+				<input autocomplete="off" type="text" class="form-control" 
+				 
+				name="valor" ng-model="leilao.item.valorMinimo"
+				 
+				ng-required="true" />
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-2 control-label">Início do leilão</label>
+			<div class="col-sm-3">
+					<div class="input-group">
+						<div class="input-group-addon" ng-click="dataInicioPopup1.opened = true">
+                            <i class="glyphicon glyphicon-calendar"></i>
+                        </div>
+                       <input type="text" class="form-control" name="inicioPeriodo" ng-model="leilao.dataInicio"
+                              uib-datepicker-popup="dd/MM/yyyy"  
+                              data-inputmask="'alias': 'dd/mm/yyyy'"
+                              is-open="dataInicioPopup1.opened" 
+                              ng-focus="dataInicioPopup1.opened = true"
+                              ng-blur="dataInicialEscolhida()"
+                              placeholder="Informe a data inicial do leilão"
+                              datepicker-options="{'maxDate' : maiorDataInicio }"
+                              input-mask-jquery  data-inputmask="'mask': '9', 'repeat': 99, 'greedy' : false"
+                              current-text="Hoje" close-text="Fechar" clear-text="Limpar" />
+                   </div>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-2 control-label">Fim do leilão</label>
+			<div class="col-sm-3">
+					<div class="input-group">
+						<div class="input-group-addon" ng-click="dataFimPopup1.opened = true">
+                            <i class="glyphicon glyphicon-calendar"></i>
+                        </div>
+                       <input type="text" class="form-control" name="fimPeriodo" ng-model="leilao.dataFim"
+                              uib-datepicker-popup="dd/MM/yyyy"  
+                              data-inputmask="'alias': 'dd/mm/yyyy'"
+                              is-open="dataFimPopup1.opened" 
+                              ng-focus="dataFimPopup1.opened = true"
+                              ng-blur="dataFinalEscolhida()"
+                              placeholder="Informe a data final do leilão"
+                              datepicker-options="{'minDate' : menorDataFim }"
+                              input-mask-jquery  data-inputmask="'mask': '9', 'repeat': 99, 'greedy' : false"
+                              current-text="Hoje" close-text="Fechar" clear-text="Limpar" />
+                   </div>
+			</div>
+		</div>
+		
+		
+	
+		
+		<div class="form-group">
+		  <div class="col-sm-offset-2 col-sm-10">
+		  
+		  	<div ng-messages="projetoForm.nome.$error" ng-show="projetoForm.nome.$invalid && projetoForm.nome.$dirty" class="alert alert-danger">
+				<div ng-message="required" >
+					Por favor preencha o nome!
+				</div>
+				
+				<div ng-message="minlength">
+					O tamanho mínimo do nome é 10 caracteres.
+				</div>
+		  	</div>
+		  	
+		  	<div ng-messages="projetoForm.descricao.$error" ng-show="projetoForm.descricao.$invalid && projetoForm.descricao.$dirty" class="alert alert-danger">
+				<div ng-message="required" >
+					Por favor preencha a descrição!
+				</div>
+				
+		  	</div>
+		  
+			
+		    <button type="button" class="btn btn-primary" ng-click="salvar(leilao)" >Salvar</button>
+		    <a href="#/todos" class="btn btn-default">Cancelar</a>
+		  </div>
+		</div>
+	</form>
+	
+
+
+</div>

@@ -1,0 +1,41 @@
+<div ng-controller="LeiloesController">
+	<h2>Leilões <small>Veja todos os leilões em andamento</small>
+		<span class="pull-right">
+			<a href="#/novoLeilao" class="btn btn-primary btn-lg">Criar um leilão</a>
+		</span>
+	</h2> 
+	
+	<div class="alert alert-success alert-dismissible" role="alert" ng-if="mensagemSucesso">
+	  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	  <strong>Mensagem</strong> {{mensagemSucesso}}
+	</div>
+	
+	<div class="alert alert-warning alert-dismissible" role="alert" ng-if="mensagemAviso">
+	  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	  <strong>Atenção</strong> {{mensagemAviso}}
+	</div>
+	
+	<div class="alert alert-danger alert-dismissible" role="alert" ng-if="mensagemErro">
+	  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	  <strong>Erro</strong> {{mensagemErro}}
+	</div>
+	
+	<div class="row">
+		<div class="bs-callout bs-callout-info" ng-repeat="leilao in leiloes">
+			<h4>{{leilao.nomeLeilao}}</h4>
+			<dl class="dl-horizontal">
+				<dt>Maior Lance</dt>
+				<dd>{{leilao.maiorLance}}</dd>
+				<dt>Quantidade de lances</dt>
+				<dd>{{leilao.quantidadeLances}}</dd>
+				<dt>Termina em</dt>
+				<dd>{{leilao.dataFim | date : 'dd/MM/yyyy'}}</dd>
+			</dl>
+			<div class="text-center">
+				<a href="#/leilao/{{leilao.id}}/novoLance" class="btn btn-primary">Dar Lance</a>
+			</div>
+		</div>
+	</div>
+	
+	
+</div>

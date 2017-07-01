@@ -1,0 +1,62 @@
+<div ng-controller="NovoLanceController">
+	
+	<h3>Novo Lance</h3>
+	<hr/>
+	
+	<form name="leilaoForm" class="form-horizontal">
+		<div class="form-group">
+		   <label class="col-sm-2 control-label">Leilão</label>
+		   <div class="col-sm-10">
+		     <p class="form-control-static">{{leilao.nome}}</p>
+		   </div>
+		</div>
+		
+		<div class="form-group">
+		   <label class="col-sm-2 control-label">Termina em:</label>
+		   <div class="col-sm-10">
+		     <p class="form-control-static">{{leilao.dataFim | date : 'dd/MM/yyyy' }}</p>
+		   </div>
+		</div>
+	
+		<div class="form-group">
+			<label class="col-sm-2 control-label">Seu lance:</label>
+			<div class="col-sm-3">
+				<input autocomplete="off" type="text" class="form-control" 
+				 
+				name="valor" ng-model="valor"
+				 
+				ng-required="true" />
+			</div>
+		</div>
+		
+		
+		<div class="form-group">
+		  <div class="col-sm-offset-2 col-sm-10">
+		  
+		  	<div ng-messages="projetoForm.nome.$error" ng-show="projetoForm.nome.$invalid && projetoForm.nome.$dirty" class="alert alert-danger">
+				<div ng-message="required" >
+					Por favor preencha o nome!
+				</div>
+				
+				<div ng-message="minlength">
+					O tamanho mínimo do nome é 10 caracteres.
+				</div>
+		  	</div>
+		  	
+		  	<div ng-messages="projetoForm.descricao.$error" ng-show="projetoForm.descricao.$invalid && projetoForm.descricao.$dirty" class="alert alert-danger">
+				<div ng-message="required" >
+					Por favor preencha a descrição!
+				</div>
+				
+		  	</div>
+		  
+			
+		    <button type="button" class="btn btn-primary" ng-click="enviar()" >Enviar</button>
+		    <a href="#/todos" class="btn btn-default">Cancelar</a>
+		  </div>
+		</div>
+	</form>
+	
+
+
+</div>

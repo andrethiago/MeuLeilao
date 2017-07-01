@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.HashSet;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +15,7 @@ import br.mp.mpf.meuleilao.Usuario;
 @Service
 public class RegistradorLanceService {
 
+	@Autowired
 	private LanceRepository repository;
 
 	ValidadorLance validador = new ValidadorLance(new HashSet<>(Arrays.asList(

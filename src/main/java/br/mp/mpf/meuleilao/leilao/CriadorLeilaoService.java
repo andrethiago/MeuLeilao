@@ -16,7 +16,7 @@ public class CriadorLeilaoService {
 	private LeilaoRepository repository;
 
 	@Transactional
-	public void criar(Item item, Date dataInicio, Date dataFim) {
+	public Leilao criar(Item item, Date dataInicio, Date dataFim) {
 		Leilao leilao = new Leilao();
 		leilao.setDataInicio(dataInicio);
 		leilao.setDataFim(dataFim);;
@@ -24,6 +24,8 @@ public class CriadorLeilaoService {
 		leilao.setNome(item.getNome());
 
 		repository.incluir(leilao);
+
+		return leilao;
 	}
 
 }

@@ -7,20 +7,36 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import br.mp.mpf.meuleilao.Lance;
 import br.mp.mpf.meuleilao.Leilao;
+import br.mp.mpf.meuleilao.Usuario;
 
+@Service
 public class VisualizadorResumoLeiloesService {
 
+	@Autowired
 	private LeilaoRepository repository;
 
 	public List<ResumoLeilaoTO> visualizaTodosLeiloesAbertos() {
 		List<Leilao> leiloes = repository.consultarTodosLeiloesAbertos();
 
+		return getResumoLeilaoTO(leiloes);
+	}
+
+	public List<ResumoLeilaoTO> visualizaTodosLeiloesAbertos(Usuario usuario) {
+		List<Leilao> leiloes = repository.consultarTodosLeiloesAbertos(usuario);
+
+		return getResumoLeilaoTO(leiloes);
+	}
+
+	private List<ResumoLeilaoTO> getResumoLeilaoTO(List<Leilao> leiloes) {
 		List<ResumoLeilaoTO> tos = new ArrayList<>();
 		for (Leilao leilao : leiloes) {
 			ResumoLeilaoTO to = new ResumoLeilaoTO();
+			to.setId(leilao.getId());
 			to.setNomeLeilao(leilao.getNome());
 			if (CollectionUtils.isNotEmpty(leilao.getLances())) {
 				to.setQuantidadeLances(leilao.getLances().size());
