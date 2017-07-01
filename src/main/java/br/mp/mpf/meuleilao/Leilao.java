@@ -3,18 +3,43 @@ package br.mp.mpf.meuleilao;
 import java.util.Date;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "LEILAO")
+@SequenceGenerator(name = "sequenceGenerator", sequenceName = "SEQ_LEILAO", allocationSize = 1)
 public class Leilao {
 
+	@Id
+	@Column(name = "ID_LEILAO", nullable = false, unique = true)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
 	private Long id;
 
+	@Column(name = "NOME", nullable = false)
 	private String nome;
 
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "ID_ITEM", nullable = false)
 	private Item item;
 
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "leilao")
 	private Set<Lance> lances;
 
+	@Column(name = "DATA_INICIO", nullable = false)
 	private Date dataInicio;
 
+	@Column(name = "DATA_FIM")
 	private Date dataFim;
 
 	public Leilao() {

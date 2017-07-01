@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- WARNING: Eclipse auto-generated file. Any modifications will be overwritten. 
+	To include a user specific buildfile here, simply create one in the same 
+	directory with the processing instruction <?eclipse.ant.import?> as the first 
+	entry and export the buildfile again. -->
+<project basedir="." default="startdb" name="leilao">
+	<!--  Global properties for this build  -->
+	<property name="database.dir" location="database" />
+	<property name="src.java.dir" location="src/java" />
+
+
+	<property name="lib.dir" location="WebContent/WEB-INF/lib" />
+	<property name="build.dir" location="build" />
+	<property name="build.classes.dir" location="${build.dir}/classes" />
+	<property name="workspace_loc:leilaodb" value="leilaodb" />
+
+	<!--  Classpath declaration  -->
+	<path id="project.classpath">
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar" />
+			<include name="**/*.zip" />
+		</fileset>
+	</path>
+
+	<!--  Start the HSQL DB server  -->
+	<target name="startdb" description="Run HSQL database server with clean DB">
+		<java classname="org.hsqldb.Server" dir="${workspace_loc:leilaodb}" fork="yes" classpathref="project.classpath" failonerror="true">
+			<arg line="-database.0 leilaodb -dbname.0 leilaodb" />
+		</java>
+	</target>
+
+</project>

@@ -1,14 +1,36 @@
 package br.mp.mpf.meuleilao;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "USUARIO")
+@SequenceGenerator(name = "sequenceGenerator", sequenceName = "SEQ_USUARIO", allocationSize = 1)
 public class Usuario {
 
+	@Id
+	@Column(name = "ID_USUARIO", nullable = false, unique = true)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
 	private Long id;
 
+	@Column(name = "NOME", nullable = false)
 	private String nome;
 
+	@Column(name = "EMAIL", nullable = false, unique = true)
 	private String email;
 
+	@Column(name = "PASSWORD", nullable = false)
 	private String password;
+
+	@Column(name = "ATIVO", nullable = false)
+	private Boolean ativo = true;
+
+	public Usuario() {}
 
 	public Usuario(String nome, String email, String password) {
 		this.nome = nome;
@@ -46,6 +68,14 @@ public class Usuario {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public Boolean getAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(Boolean ativo) {
+		this.ativo = ativo;
 	}
 
 	@Override

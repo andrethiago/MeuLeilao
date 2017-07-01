@@ -24,4 +24,8 @@ public class CadastroUsuarioService {
 		return repository.consultarTodos();
 	}
 
+	public Usuario consutarPorId(Long id) {
+		return repository.consultarPorId(id);
+	}
+
 }

@@ -2,16 +2,38 @@ package br.mp.mpf.meuleilao;
 
 import java.math.BigDecimal;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "ITEM")
+@SequenceGenerator(name = "sequenceGenerator", sequenceName = "SEQ_ITEM", allocationSize = 1)
 public class Item {
 
+	@Id
+	@Column(name = "ID_ITEM", nullable = false, unique = true)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
 	private Long id;
 
+	@Column(name = "NOME", nullable = false)
 	private String nome;
 
+	@Column(name = "DESCRICAO")
 	private String descricao;
 
+	@Column(name = "VALOR_MINIMO", nullable = false)
 	private BigDecimal valorMinimo;
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ID_DONO_ITEM", nullable = false)
 	private Usuario dono;
 
 	public Long getId() {

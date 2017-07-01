@@ -3,17 +3,42 @@ package br.mp.mpf.meuleilao;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "LANCE")
+@SequenceGenerator(name = "sequenceGenerator", sequenceName = "SEQ_LANCE", allocationSize = 1)
 public class Lance {
 
+	@Id
+	@Column(name = "ID_LANCE", nullable = false, unique = true)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
 	private Long id;
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ID_OFERTANTE", nullable = false)
 	private Usuario ofertante;
 
+	@Column(name = "VALOR", nullable = false)
 	private BigDecimal valor;
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ID_LEILAO", nullable = false)
 	private Leilao leilao;
 
+	@Column(name = "DATA_LANCE", nullable = false)
 	private Date data;
+
+	public Lance() {}
 
 	public Lance(Usuario ofertante, BigDecimal valor, Leilao leilao) {
 		this.ofertante = ofertante;
