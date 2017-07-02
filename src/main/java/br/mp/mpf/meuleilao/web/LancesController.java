@@ -28,8 +28,6 @@ public class LancesController {
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
 	public Resultado incluir(@RequestBody LanceTO to) {
-		//to.getItem().setDono(cadastroUsuario.consutarPorId(1L));
-		//criadorLeilao.criar(to.getItem(), to.getDataInicio(), to.getDataFim());
 		Leilao leilao = consultaLeiloes.consultarPorId(to.getLeilao());
 		registradorLance.fazLance(new Usuario(to.getUsuario()), to.getValor(), leilao);
 		return new Resultado("Lance realizado com sucesso!");

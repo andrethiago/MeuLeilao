@@ -57,4 +57,17 @@ public class OrdenadorLeiloesTest {
 		assertThat(tosOrdenados, contains(leilaoGarmin, leilaoGeladeira, leilaoIphone));
 	}
 
+	@Test
+	public void verificaOrdenacaoLeilaoComHamcrestDataFimNula() {
+		ResumoLeilaoTO leilaoSemDataFim = ResumoLeilaoTOTestDataBuilder.umResumoLeilao()
+			.comNomeLeilao("Leilão sem data fim")
+			.comDataFim(null)
+			.build();
+		tos.add(leilaoSemDataFim);
+		OrdenadorLeiloes ordenador = new OrdenadorLeiloes();
+		List<ResumoLeilaoTO> tosOrdenados = ordenador.ordenarPorDataFimMaisRecente(tos);
+
+		assertThat(tosOrdenados, contains(leilaoGarmin, leilaoGeladeira, leilaoIphone, leilaoSemDataFim));
+	}
+
 }

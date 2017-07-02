@@ -54,8 +54,15 @@
   color: #F44336;
   vertical-align: top;
   content: '*';
-  margin-left: 2px; }
+  margin-left: 2px; 
+}
 
 .form-group.obrigatorio label.radio-inline:after {
   content: '';
-  margin: 0; }
+  margin: 0; 
+}
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+  

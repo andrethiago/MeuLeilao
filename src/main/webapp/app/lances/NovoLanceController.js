@@ -1,4 +1,4 @@
-angular.module('leilao').controller('NovoLanceController', function ($scope, $routeParams, $location, LeiloesRestService, LancesRestService){
+angular.module('leilao').controller('NovoLanceController', function ($scope, $routeParams, $location, LeiloesRestService, LancesRestService, InformacaoSessaoService){
 	
 	$scope.leilao =  {};
 	
@@ -14,12 +14,16 @@ angular.module('leilao').controller('NovoLanceController', function ($scope, $ro
 	$scope.enviar = function(valor) {
 		$scope.lanceForm.$setDirty();
 		if($scope.lanceForm.$valid) {
-			var lance = {
-					'leilao' : $scope.leilao.id,
-					'valor' : valor,
-					'usuario' : 1
-			};
-			LancesRestService.incluir(lance).then(
+			InformacaoSessaoService.usuario().then(
+					function success(resposta) {
+						var lance = {
+								'leilao' : $scope.leilao.id,
+								'valor' : valor,
+								'usuario' : resposta.id
+						};
+						return LancesRestService.incluir(lance);
+					}
+			).then(
 					function success(resposta) {
 						$location.path('/todos');
 					},

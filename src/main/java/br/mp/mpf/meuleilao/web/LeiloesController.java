@@ -14,7 +14,6 @@ import br.mp.mpf.meuleilao.leilao.ConsultaLeiloesService;
 import br.mp.mpf.meuleilao.leilao.CriadorLeilaoService;
 import br.mp.mpf.meuleilao.leilao.LeilaoTO;
 import br.mp.mpf.meuleilao.leilao.VisualizadorResumoLeiloesService;
-import br.mp.mpf.meuleilao.usuario.CadastroUsuarioService;
 
 @Controller
 @RequestMapping("/leiloes")
@@ -28,9 +27,6 @@ public class LeiloesController {
 
 	@Autowired
 	private ConsultaLeiloesService consultaLeiloes;
-
-	@Autowired
-	private CadastroUsuarioService cadastroUsuario;
 
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
@@ -47,8 +43,7 @@ public class LeiloesController {
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
 	public Resultado incluir(@RequestBody LeilaoTO to) {
-		//to.getItem().setDono(cadastroUsuario.consutarPorId(1L));
-		//criadorLeilao.criar(to.getItem(), to.getDataInicio(), to.getDataFim());
+		criadorLeilao.criar(to.getItem(), to.getDataInicio(), to.getDataFim());
 		return new Resultado("Leilão incluído com sucesso!");
 	}
 

@@ -2,9 +2,7 @@ package br.mp.mpf.meuleilao.leilao;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +24,8 @@ public class VisualizadorResumoLeiloesService {
 		return getResumoLeilaoTO(leiloes);
 	}
 
-	public List<ResumoLeilaoTO> visualizaTodosLeiloesAbertos(Usuario usuario) {
-		List<Leilao> leiloes = repository.consultarTodosLeiloesAbertos(usuario);
+	public List<ResumoLeilaoTO> visualizaTodosLeiloes(Usuario usuario) {
+		List<Leilao> leiloes = repository.consultarTodosLeiloes(usuario);
 
 		return getResumoLeilaoTO(leiloes);
 	}
@@ -38,6 +36,7 @@ public class VisualizadorResumoLeiloesService {
 			ResumoLeilaoTO to = new ResumoLeilaoTO();
 			to.setId(leilao.getId());
 			to.setNomeLeilao(leilao.getNome());
+			to.setDono(leilao.getItem().getDono().getId());
 			to.setLanceMinimo(leilao.getItem().getValorMinimo());
 			if (CollectionUtils.isNotEmpty(leilao.getLances())) {
 				to.setQuantidadeLances(leilao.getLances().size());
@@ -73,7 +72,7 @@ public class VisualizadorResumoLeiloesService {
 			}
 		});*/
 
-		return tos.stream().sorted(Comparator.comparing(ResumoLeilaoTO::getDataFim)).collect(Collectors.toList());
+		return new OrdenadorLeiloes().ordenarPorDataFimMaisRecente(tos);
 	}
 
 }

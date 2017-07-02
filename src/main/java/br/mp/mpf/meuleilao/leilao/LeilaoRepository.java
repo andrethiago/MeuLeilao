@@ -20,10 +20,8 @@ class LeilaoRepository extends BaseRepository<Leilao> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Leilao> consultarTodosLeiloesAbertos(Usuario usuario) {
-		return getSession()
-			.createQuery(
-				"from Leilao where item.dono = :usuario and dataInicio <= current_timestamp and (dataFim is null or dataFim > current_date)")
+	public List<Leilao> consultarTodosLeiloes(Usuario usuario) {
+		return getSession().createQuery("from Leilao where item.dono = :usuario")
 			.setParameter("usuario", usuario)
 			.list();
 	}

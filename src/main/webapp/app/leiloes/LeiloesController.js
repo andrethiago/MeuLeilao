@@ -1,15 +1,16 @@
-angular.module('leilao').controller('LeiloesController', function ($scope, $routeParams, LeiloesRestService){
-	
-	
-	var usuario = $routeParams.idUsuario;
+angular.module('leilao').controller('LeiloesController', function ($scope, $routeParams, LeiloesRestService, InformacaoSessaoService){
 	
 	
 	$scope.leilao = null;
 	$scope.leiloes = [];
-	$scope.mensagemSucesso = null;
-	$scope.mensagemAviso = null;
-	$scope.mensagemErro = null;
-	$scope.exibeFormulario = false;
+	$scope.usuarioAtual = {}
+	
+	var usuario = $routeParams.idUsuario;
+	InformacaoSessaoService.usuario().then(
+		function success(resposta) {
+			$scope.usuarioAtual = resposta;
+		}
+	);
 	
 	
 	function carregarLeiloes() {

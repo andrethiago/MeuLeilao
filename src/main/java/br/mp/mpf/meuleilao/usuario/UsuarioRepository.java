@@ -15,4 +15,10 @@ class UsuarioRepository extends BaseRepository<Usuario> {
 		return getSession().createQuery("from Usuario").list();
 	}
 
+	public Usuario consultarPorEmail(String email) {
+		return (Usuario) getSession().createQuery("from Usuario where email = :email")
+			.setParameter("email", email)
+			.uniqueResult();
+	}
+
 }

@@ -11,6 +11,7 @@ public class ResumoLeilaoTO {
 	private BigDecimal maiorLance = BigDecimal.ZERO;
 	private BigDecimal lanceMinimo;
 	private Date dataFim;
+	private Long dono;
 
 	public Long getId() {
 		return id;
@@ -58,6 +59,14 @@ public class ResumoLeilaoTO {
 
 	public void setLanceMinimo(BigDecimal lanceMinimo) {
 		this.lanceMinimo = lanceMinimo;
+	}
+
+	public Long getDono() {
+		return dono;
+	}
+
+	public void setDono(Long dono) {
+		this.dono = dono;
 	}
 
 	@Override

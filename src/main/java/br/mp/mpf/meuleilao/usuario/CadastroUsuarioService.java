@@ -28,4 +28,8 @@ public class CadastroUsuarioService {
 		return repository.consultarPorId(id);
 	}
 
+	public Usuario consutarPorEmail(String email) {
+		return repository.consultarPorEmail(email);
+	}
+
 }

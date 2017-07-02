@@ -1,4 +1,4 @@
-angular.module('leilao').controller('NovoLeilaoController', function ($scope, $location, LeiloesRestService){
+angular.module('leilao').controller('NovoLeilaoController', function ($scope, $location, LeiloesRestService, InformacaoSessaoService){
 	
 	$scope.leilao = null;
 	
@@ -24,7 +24,12 @@ angular.module('leilao').controller('NovoLeilaoController', function ($scope, $l
 	$scope.salvar = function(leilao) {
 		$scope.leilaoForm.$setDirty();
 		if($scope.leilaoForm.$valid) {
-			LeiloesRestService.incluir(leilao).then(
+			InformacaoSessaoService.usuario().then(
+				function success(resposta) {
+					leilao.item.dono = resposta;
+					return LeiloesRestService.incluir(leilao);
+				}
+			).then(
 					function success(resposta) {
 						$location.path('/todos');
 					},
