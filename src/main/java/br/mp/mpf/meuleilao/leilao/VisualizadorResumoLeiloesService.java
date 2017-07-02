@@ -50,28 +50,12 @@ public class VisualizadorResumoLeiloesService {
 	}
 
 	private BigDecimal getMaiorLance(Leilao leilao) {
-		/*BigDecimal maiorLance = BigDecimal.ZERO;
-		for (Lance lance : leilao.getLances()) {
-			if (lance.getValor().compareTo(maiorLance) >= 0) {
-				maiorLance = lance.getValor();
-			}
-		}
-		return maiorLance;*/
-
 		Lance maiorLance = leilao.getLances().stream().max((l1, l2) -> l1.getValor().compareTo(l2.getValor())).get();
 		return maiorLance.getValor();
 
 	}
 
 	private List<ResumoLeilaoTO> ordenarPorDataFimMaisRecente(List<ResumoLeilaoTO> tos) {
-		/*Collections.sort(tos, new Comparator<ResumoLeilaoTO>() {
-		
-			@Override
-			public int compare(ResumoLeilaoTO resumo1, ResumoLeilaoTO resumo2) {
-				return resumo1.getDataFim().compareTo(resumo2.getDataFim());
-			}
-		});*/
-
 		return new OrdenadorLeiloes().ordenarPorDataFimMaisRecente(tos);
 	}
 

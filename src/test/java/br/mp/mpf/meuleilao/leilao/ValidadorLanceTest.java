@@ -29,7 +29,6 @@ public class ValidadorLanceTest {
 
 	@Before
 	public void preparaValidador() {
-		//validador = new ValidadorLance();
 		Set<ValidaLance> validadores = new HashSet<>();
 		validadores.add(new ValidadorLanceLeilaoFechado());
 		validadores.add(new ValidadorLanceMaiorDeTodos());
@@ -54,26 +53,6 @@ public class ValidadorLanceTest {
 		validador.validar(LanceTestDataBuilder.umLance().build(), leilaoBuilder.comDataFim(null).build());
 		assertTrue("Deve ser possível fazer lances em um leilão aberto sem data fim.", true);
 	}
-
-	/*@Test(expected = LanceInvalidoException.class)
-	public void naoEPossivelFazerLanceEmLeiloesFechados() {
-		Date ontem = LocalDate.now().minusDays(1).toDate();
-	
-		validador.validar(LanceTestDataBuilder.umLance().build(), leilaoBuilder.comDataFim(ontem).build());
-	}
-	
-	@Test
-	public void lanceEmUmLeilaoFechadoDeveTerMensagemExplicativaDoMotivoDeFalha() {
-		Date ontem = LocalDate.now().minusDays(1).toDate();
-	
-		try {
-			validador.validar(LanceTestDataBuilder.umLance().build(), leilaoBuilder.comDataFim(ontem).build());
-			fail("Lance em leilão fechado deve lançar uma exceção.");
-		} catch (LanceInvalidoException e) {
-			assertEquals("Não é possível fazer lances em um leilão fechado.", e.getMessage());
-		}
-	}
-	*/
 
 	@Test
 	public void lanceEmUmLeilaoFechadoDeveTerMensagemExplicativaDoMotivoDeFalhaVersaoElegante() {
