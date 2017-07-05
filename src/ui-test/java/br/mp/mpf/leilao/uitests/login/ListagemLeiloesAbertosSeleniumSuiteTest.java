@@ -1,6 +1,8 @@
 package br.mp.mpf.leilao.uitests.login;
 
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.not;
+import static org.junit.Assert.assertThat;
 
 import org.junit.After;
 import org.junit.Before;
@@ -9,13 +11,14 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-public class LoginSeleniumSuiteTest {
+public class ListagemLeiloesAbertosSeleniumSuiteTest {
 
 	private WebDriver driver;
 
 	@Before
 	public void criaDriver() {
 		driver = new ChromeDriver();
+		//driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 	}
 
 	@After
@@ -24,25 +27,14 @@ public class LoginSeleniumSuiteTest {
 	}
 
 	@Test
-	public void usuarioCadastradoDeveFazerLoginComSucesso() {
+	public void aposAutenticarUsuarioDeveVerListaDeTodosLeiloesAbertos() {
 		driver.get("http://localhost:8080/leilao");
 		driver.findElement(By.name("username")).sendKeys("joaosilva@mpf.mp.br");
 		driver.findElement(By.name("password")).sendKeys("123456");
 
 		driver.findElement(By.cssSelector("input[type='submit']")).click();
 
-		assertTrue(driver.findElement(By.className("navbar")) != null);
-	}
-
-	@Test
-	public void usuarioNaoCadastradoNaoDeveConseguirFazerLogin() {
-		driver.get("http://localhost:8080/leilao");
-		driver.findElement(By.name("username")).sendKeys("andrethiago@mpf.mp.br");
-		driver.findElement(By.name("password")).sendKeys("123456");
-
-		driver.findElement(By.cssSelector("input[type='submit']")).click();
-
-		assertTrue(driver.getCurrentUrl().contains("?error"));
+		assertThat(driver.findElements(By.cssSelector("div.bs-callout")), not(empty()));
 	}
 
 }
