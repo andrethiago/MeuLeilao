@@ -1,4 +1,4 @@
-package br.mp.mpf.leilao.uitests.login;
+package br.mp.mpf.leilao.uitests.listagem;
 
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.not;
