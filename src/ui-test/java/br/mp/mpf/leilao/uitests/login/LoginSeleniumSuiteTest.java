@@ -27,11 +27,6 @@ public class LoginSeleniumSuiteTest {
 
 	@Test
 	public void usuarioCadastradoDeveFazerLoginComSucesso() {
-		/*driver.get("http://localhost:8080/leilao");
-		driver.findElement(By.name("username")).sendKeys("joaosilva@mpf.mp.br");
-		driver.findElement(By.name("password")).sendKeys("123456");
-		
-		driver.findElement(By.cssSelector("input[type='submit']")).click();*/
 		ListagemLeilaoAbertosPage homePage =
 			new LoginPage(driver).visita("http://localhost:8080/leilao").autentica("joaosilva@mpf.mp.br", "123456");
 
@@ -40,11 +35,6 @@ public class LoginSeleniumSuiteTest {
 
 	@Test
 	public void usuarioNaoCadastradoNaoDeveConseguirFazerLogin() {
-		/*driver.get("http://localhost:8080/leilao");
-		driver.findElement(By.name("username")).sendKeys("andrethiago@mpf.mp.br");
-		driver.findElement(By.name("password")).sendKeys("123456");
-		
-		driver.findElement(By.cssSelector("input[type='submit']")).click();*/
 
 		ListagemLeilaoAbertosPage homePage =
 			new LoginPage(driver).visita("http://localhost:8080/leilao").autentica("andrethiago@mpf.mp.br", "123456");
