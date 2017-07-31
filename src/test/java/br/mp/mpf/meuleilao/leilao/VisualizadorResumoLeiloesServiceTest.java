@@ -18,8 +18,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import br.mp.mpf.meuleilao.Item;
 import br.mp.mpf.meuleilao.Lance;
 import br.mp.mpf.meuleilao.Leilao;
+import br.mp.mpf.meuleilao.Usuario;
 
 @RunWith(MockitoJUnitRunner.class)
 public class VisualizadorResumoLeiloesServiceTest {
@@ -54,24 +56,32 @@ public class VisualizadorResumoLeiloesServiceTest {
 				LanceTestDataBuilder.umLance().comId(6L).comValor(BigDecimal.valueOf(1120.0)).build(),
 				LanceTestDataBuilder.umLance().comId(7L).comValor(BigDecimal.valueOf(1075.0)).build()});
 
-		lancesGeladeira = Arrays
-			.asList(new Lance[] {LanceTestDataBuilder.umLance().comId(8L).comValor(BigDecimal.valueOf(750.0)).build()});
+		lancesGeladeira = Arrays.asList(new Lance[] {LanceTestDataBuilder.umLance().comId(8L).comValor(BigDecimal.valueOf(750.0)).build()});
 
+		Item garmin = new Item();
+		garmin.setDono(new Usuario());
 		leilaoGarmin = LeilaoTestDataBuider.umLeilao()
 			.comDataFim(LocalDate.now().plusDays(5).toDate())
 			.comNome("Leilão GPS Garmin")
 			.comLances(new HashSet<>(lancesGarmin))
+			.paraItem(garmin)
 			.build();
 
+		Item iPhone = new Item();
+		iPhone.setDono(new Usuario());
 		leilaoIphone = LeilaoTestDataBuider.umLeilao()
 			.comDataFim(LocalDate.now().plusDays(2).toDate())
 			.comNome("Leilão Iphone 4")
+			.paraItem(iPhone)
 			.comLances(new HashSet<>(lancesIphone4))
 			.build();
 
+		Item geladeira = new Item();
+		geladeira.setDono(new Usuario());
 		leilaoGeladeira = LeilaoTestDataBuider.umLeilao()
 			.comDataFim(LocalDate.now().plusDays(20).toDate())
 			.comNome("Leilão Geladeira")
+			.paraItem(geladeira)
 			.comLances(new HashSet<>(lancesGeladeira))
 			.build();
 
